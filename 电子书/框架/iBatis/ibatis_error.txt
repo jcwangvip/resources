@@ -1,0 +1,26 @@
+com.mchange.v2.resourcepool.ResourcePoolException: Attempted to use a closed or broken resource pool
+
+解决这个异常需要修改设置成如下：
+
+<property name="acquireRetryAttempts">
+    <value>30</value>
+</property>
+<property name="acquireRetryDelay">
+    <value>100</value>
+</property>
+<property name="breakAfterAcquireFailure">
+    <value>false</value>
+</property>
+- acquireRetryAttempts 
+Default: 30 
+Defines how many times c3p0 will try to acquire a new Connection from the database before giving up. If this value is less than or equal to zero, c3p0 will keep trying to fetch a Connection indefinitely 
+
+- acquireRetryDelay 
+Default: 1000 
+Milliseconds, time c3p0 will wait between acquire attempts. 
+
+- breakAfterAcquireFailure 
+Default: false 
+If true, a pooled DataSource will declare itself broken and be permanently closeed if a Connection cannot be obtained from the database after making acquireRetryAttempts to acquire one. If false, failure to obtain a Connection will cause all Threads waiting for the pool to acquire a Connection to throw an Exception, but the DataSource will remain valid, and will attempt to acquire again following a call to getConnection().
+
+ 
